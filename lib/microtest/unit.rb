@@ -87,7 +87,12 @@ module Microtest
     end
   
     def _die(error)
-      Runner.failures << error
+      if error.is_a? TestFailure
+        Runner.failures << error
+      else
+        print "E"
+        Runner.errors << error
+      end
     end
 
     def _test_methods
@@ -105,6 +110,9 @@ module Microtest
     def self.failures; @failures ||= []; end
     def self.failures=(val); @failures = val; end
     
+    def self.errors; @errors ||= []; end
+    def self.errors=(val); @erros = []; end
+
     def self.pendings; @pendings ||= []; end
     def self.pendings=(val); @pendings = val; end
 
