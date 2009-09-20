@@ -50,6 +50,16 @@ module Microtest
       raise TestFailure.new(message || "FAIL")
     end
     alias flunk _fail
+
+    def self.pending(message = "")
+      print "P"
+      Runner.pendings << message.to_s
+    end
+
+    def _pending(message = "")
+      self.class.pending(message)
+    end
+    alias pending _pending
     
     def _run
       begin
@@ -95,6 +105,9 @@ module Microtest
     def self.failures; @failures ||= []; end
     def self.failures=(val); @failures = val; end
     
+    def self.pendings; @pendings ||= []; end
+    def self.pendings=(val); @pendings = val; end
+
     def self.assertions; @assertions ||= 0; end
     def self.assertions=(val); @assertions = val; end
     
@@ -108,15 +121,23 @@ module Microtest
     
     def self.report!
       puts
-      @failures.each_with_index {|f, i| report_failure(f, i) }
+      Runner.failures.each_with_index {|f, i| report_single(:failure, f, i) }
       
+      puts
+      Runner.pendings.each_with_index {|p, i| report_single(:pending, p, i) }
+
       puts
       puts "#{assertions} assertions, #{failures.select {|f| f.is_a?(TestFailure) }.length} failures, #{failures.reject {|f| f.is_a?(TestFailure) }.length} errors"
     end
     
-    def self.report_failure(failure, number = 0)
+    def self.report_single(type, reportee, number = 0)
       require 'pp'
-      puts "#{number + 1}) #{failure.message} (#{failure.class.name})"
+      print "#{number + 1})  "
+      if reportee.respond_to? :message
+        puts "#{reportee.message} (#{reportee.class.name})"
+      else
+        puts reportee
+      end
     end
   end
 end

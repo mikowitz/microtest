@@ -16,6 +16,12 @@ class TestThing < Microtest::TestCase
   def test_not
     assert_not false
   end
+
+  def test_pending
+    pending "Not implemented yet"
+  end
+
+  pending :test_more_pending
 end
 
 Microtest::Runner.run_tests
