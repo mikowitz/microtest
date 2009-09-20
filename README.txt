@@ -1,6 +1,6 @@
 microtest
     by Jeremy McAnally
-    http://github.com/jeremymcanally/microtest
+    this fork: http://github.com/mikowitz/microtest
 
 == DESCRIPTION:
 
@@ -12,7 +12,7 @@ Teeny test framework.  Smaller than minitest, hence microtest.
 
 TODOs:
 
-* Extract reporting into separate module, make pluggable output
+* Expand reporting module with customizable output
 * Add more assertions
 * Make contest work with it
 

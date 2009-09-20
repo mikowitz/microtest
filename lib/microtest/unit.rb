@@ -120,24 +120,7 @@ module Microtest
     end
     
     def self.report!
-      puts
-      Runner.failures.each_with_index {|f, i| report_single(:failure, f, i) }
-      
-      puts
-      Runner.pendings.each_with_index {|p, i| report_single(:pending, p, i) }
-
-      puts
-      puts "#{assertions} assertions, #{failures.select {|f| f.is_a?(TestFailure) }.length} failures, #{failures.reject {|f| f.is_a?(TestFailure) }.length} errors"
-    end
-    
-    def self.report_single(type, reportee, number = 0)
-      require 'pp'
-      print "#{number + 1})  "
-      if reportee.respond_to? :message
-        puts "#{reportee.message} (#{reportee.class.name})"
-      else
-        puts reportee
-      end
+      Reporter.new.report!
     end
   end
 end
