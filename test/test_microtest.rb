@@ -1,5 +1,3 @@
-require File.dirname(__FILE__) + '/../lib/microtest'
-
 class TestThing < Microtest::TestCase
   def test_true
     assert true
@@ -23,5 +21,3 @@ class TestThing < Microtest::TestCase
 
   pending :test_more_pending
 end
-
-Microtest::Runner.run_tests

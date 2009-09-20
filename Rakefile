@@ -25,8 +25,8 @@ PROJ.url = 'http://jeremymcanally.com'
 PROJ.version = Microtest::VERSION
 PROJ.rubyforge.name = 'microtest'
 
-PROJ.spec.opts << '--color'
+PROJ.test.file = "test/test_helper.rb"
+PROJ.spec.opts << '-cfs'
 
 task :test do
-  
 end

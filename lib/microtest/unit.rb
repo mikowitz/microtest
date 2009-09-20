@@ -115,12 +115,11 @@ module Microtest
       @suites.each do |suite|
         suite._run
       end
-      
       report!
     end
     
     def self.report!
-      Reporter.new.report!
+      Reporter.report!
     end
   end
 end

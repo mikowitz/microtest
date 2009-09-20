@@ -1,6 +1,10 @@
 module Microtest
-  class Reporter
-    def report!
+  module Reporter
+    SETTINGS = {
+      :color => false
+    }
+
+    def self.report!
       puts
       Runner.failures.each_with_index {|f, i| report_single(:failure, f, i) }
       
@@ -17,7 +21,7 @@ module Microtest
 
     private
 
-    def report_single(type, reportee, number = 0)
+    def self.report_single(type, reportee, number = 0)
       require 'pp'
       print "#{number + 1})  "
       if reportee.respond_to? :message
