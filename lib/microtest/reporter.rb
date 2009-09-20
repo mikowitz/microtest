@@ -6,20 +6,30 @@ module Microtest
 
     def self.report!
       puts
-      Runner.failures.each_with_index {|f, i| report_single(:failure, f, i) }
-      
+      report_set(:failures)
+
       puts
-      Runner.pendings.each_with_index {|p, i| report_single(:pending, p, i) }
+      report_set(:errors)
+
+      puts
+      report_set(:pendings)
 
       puts
       puts ["#{Runner.assertions} assertions", 
-            "#{Runner.failures.select {|f| f.is_a?(TestFailure) }.length} failures",
-            "#{Runner.failures.reject {|f| f.is_a?(TestFailure) }.length} errors",
+            "#{Runner.failures.length} failures",
+            "#{Runner.errors.length} errors",
             "#{Runner.pendings.length} pending tests"].join(", ")
     end
     
 
     private
+
+    def self.report_set(set)
+      puts "= = #{set.to_s} = ="
+      Runner.send(set).each_with_index do |item, index|
+        report_single(:whatever, item, index)
+      end
+    end
 
     def self.report_single(type, reportee, number = 0)
       require 'pp'
