@@ -1,13 +1,4 @@
-
 require File.join(File.dirname(__FILE__), %w[spec_helper])
-
-def reset_runner(runner)
-  runner.suites = []
-  runner.assertions = 0
-  runner.passes = 0
-  runner.failures = []
-  runner.pendings = []
-end
 
 describe Microtest do
   describe "testing one success, one failure, two pendings, and one error" do
@@ -47,13 +38,16 @@ describe Microtest do
       @mtr.passes.should == 1
     end
   
-    it "should return two failures" do
-      @mtr.failures.size.should == 2
+    it "should return one failure" do
+      @mtr.failures.size.should == 1
     end
   
-    it "should return tow pendings" do
+    it "should return one error" do
+      @mtr.errors.size.should == 1
+    end
+
+    it "should return two pendings" do
       @mtr.pendings.size.should == 2
     end
   end
 end
-# EOF
