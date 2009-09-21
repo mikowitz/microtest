@@ -1,7 +1,7 @@
 module Microtest
   module Reporter
     SETTINGS = {
-      :color => false
+      :show_colors => true
     }
 
     COLORS = {
@@ -12,19 +12,13 @@ module Microtest
 
     def self.report!
       puts
+
       report_set(:failures)
-
       report_set(:errors)
-
       report_set(:pendings)
 
-      full_results = ["#{Runner.assertions} assertions",
-                      "#{Runner.failures.length} failures",
-                      "#{Runner.errors.length} errors",
-                      "#{Runner.pendings.length} pending tests"
-                      ].join(", ")
       puts
-      Color.send(self.results_color, full_results)
+      Color.send(self.results_color, self.full_results)
       puts
     end
     
@@ -45,6 +39,15 @@ module Microtest
       else
         :red
       end
+    end
+
+    def self.full_results
+      ["#{Runner.assertions} assertions",
+                      "#{Runner.failures.length} failures",
+                      "#{Runner.errors.length} errors",
+                      "#{Runner.pendings.length} pending tests"
+                      ].join(", ")
+
     end
 
     def self.report_set(set)

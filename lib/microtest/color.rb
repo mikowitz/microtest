@@ -14,6 +14,7 @@ module Microtest
     end
 
     def self.write_with_color(color, *args)
+      color = Reporter::SETTINGS[:show_colors] ? color : :clear
       "\e[#{ANSI[color]}m#{args.first.to_s}\e[#{ANSI[:clear]}m"
     end
 
