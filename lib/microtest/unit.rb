@@ -41,18 +41,18 @@ module Microtest
     end
     
     def _pass
-      print "."
+      Color.green(".")
       Runner.passes += 1
     end
     
     def _fail(message)
-      print "F"
+      Color.red("F")
       raise TestFailure.new(message || "FAIL")
     end
     alias flunk _fail
 
     def self.pending(message = "")
-      print "P"
+      Color.cyan("P")
       Runner.pendings << message.to_s
     end
 
@@ -90,7 +90,7 @@ module Microtest
       if error.is_a? TestFailure
         Runner.failures << error
       else
-        print "E"
+        Color.yellow("E")
         Runner.errors << error
       end
     end
