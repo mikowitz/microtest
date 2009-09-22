@@ -51,20 +51,16 @@ module Microtest
     end
     alias flunk _fail
 
-    def self.pending(message = "")
-      Color.cyan("P")
-      Runner.pendings << message.to_s
-    end
-
     def _pending(message = "")
-      self.class.pending(message)
+      Color.cyan("-")
+      Runner.pendings << message.to_s
     end
     alias pending _pending
     
     def _run
       begin
         _do_or_die { setup }
-    
+
         _test_methods.each do |m|
           _do_or_die { send(m) }
         end
@@ -90,7 +86,7 @@ module Microtest
       if error.is_a? TestFailure
         Runner.failures << error
       else
-        Color.yellow("E")
+        Color.yellow("*")
         Runner.errors << error
       end
     end
